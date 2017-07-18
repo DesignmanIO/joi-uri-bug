@@ -1,22 +1,27 @@
 import { Template } from 'meteor/templating';
 import { ReactiveVar } from 'meteor/reactive-var';
+import joi from 'joi';
 
 import './main.html';
 
-Template.hello.onCreated(function helloOnCreated() {
-  // counter starts at 0
-  this.counter = new ReactiveVar(0);
+Template.main.onCreated(function mainOnCreated() {
+  const credentials = {auth: {tokenHost: 'https://sub.example.com'}};
+  const schema = joi
+    .object()
+    .keys({
+      auth: joi
+        .object()
+        .keys({
+          tokenHost: joi
+            .string()
+            .required()
+            .uri({scheme: ['http','https']})}),
+        });
+  console.log(joi.attempt(credentials, schema, 'bad!'));
 });
 
-Template.hello.helpers({
-  counter() {
-    return Template.instance().counter.get();
-  },
-});
-
-Template.hello.events({
-  'click button'(event, instance) {
-    // increment the counter when button is clicked
-    instance.counter.set(instance.counter.get() + 1);
+Template.main.helpers({
+  status() {
+    // return Template.instance().counter.get();
   },
 });

@@ -2,10 +2,12 @@
   "name": "joi-uri-bug",
   "private": true,
   "scripts": {
-    "start": "meteor run"
+    "start": "meteor run",
+    "production": "meteor run --production"
   },
   "dependencies": {
     "babel-runtime": "^6.20.0",
+    "joi": "^10.6.0",
     "meteor-node-stubs": "~0.2.4"
   }
 }
